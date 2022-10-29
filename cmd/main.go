@@ -1,35 +1,41 @@
 package main
 
 import (
-	"fmt"
 	"github.com/ArtemFed/todo-app-test"
 	"github.com/ArtemFed/todo-app-test/pkg/handler"
 	"github.com/ArtemFed/todo-app-test/pkg/repository"
 	"github.com/ArtemFed/todo-app-test/pkg/service"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/siruspen/logrus"
 	"github.com/spf13/viper"
 	"log"
+	"os"
 )
 
 func main() {
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+
 	if err := initConfig(); err != nil {
 		log.Fatalf("error initializing config: %s", err.Error())
+	}
+
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("error loading env variables: %s", err.Error())
 	}
 
 	db, err := repository.NewPostgresDB(repository.Config{
 		Host:     viper.GetString("db.host"),
 		Port:     viper.GetString("db.port"),
 		Username: viper.GetString("db.username"),
-		Password: viper.GetString("db.password"),
 		DBName:   viper.GetString("db.dbname"),
 		SSLMode:  viper.GetString("db.sslmode"),
+		Password: os.Getenv("DB_PASSWORD"),
 	})
-	fmt.Println("Step 1")
 
 	if err != nil {
 		log.Fatalf("failed to initialize database: %s", err.Error())
 	}
-	fmt.Println("Step 2")
 
 	repos := repository.NewRepository(db)
 	services := service.NewService(repos)

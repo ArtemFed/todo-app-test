@@ -6,6 +6,14 @@ import (
 	"github.com/siruspen/logrus"
 )
 
+const (
+	usersTable     = "users"
+	todoLists      = "todo_lists"
+	usersLists     = "users_lists"
+	todoItemsTable = "todo_items"
+	listsItemTable = "lists_items"
+)
+
 type Config struct {
 	Host     string
 	Port     string

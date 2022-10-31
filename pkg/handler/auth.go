@@ -9,8 +9,9 @@ import (
 func (h *Handler) signUp(c *gin.Context) {
 	var input todo.User
 
-	if err := c.Bind(&input); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+	// Кто такой BindJSON()
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid input body")
 		return
 	}
 
@@ -20,6 +21,7 @@ func (h *Handler) signUp(c *gin.Context) {
 		return
 	}
 
+	// Это как-то работает... Зачем JSON статус ОК и id?
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"id": id,
 	})

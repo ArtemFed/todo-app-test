@@ -9,7 +9,6 @@ import (
 func (h *Handler) signUp(c *gin.Context) {
 	var input todo.User
 
-	// Кто такой BindJSON()
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid input body")
 		return

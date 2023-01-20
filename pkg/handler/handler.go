@@ -22,7 +22,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		auth.POST("/sign-in", h.signIn)
 	}
 
-	// Что даёт router.Group("/api", h.userIdentity), а именно "h.userIdentity" ?
 	api := router.Group("/api", h.userIdentity)
 	{
 		lists := api.Group("/lists")

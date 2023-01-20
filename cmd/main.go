@@ -43,7 +43,7 @@ func main() {
 	srv := new(todo.Server)
 
 	if err := srv.Run(viper.GetString("port"), myHandler.InitRoutes()); err != nil {
-		logrus.Fatalf("error occered while running server: %s", err.Error())
+		logrus.Fatalf("error occurred while running server: %s", err.Error())
 	}
 
 }
